@@ -1,4 +1,5 @@
 
+import type { Metadata } from 'next';
 import { ShlokaDisplay } from "@/components/shloka-display";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,8 +21,38 @@ import {
   Settings, 
   Home, 
   Sparkles, 
-  Compass, 
+  Compass,
 } from "lucide-react";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sanatanainsights.com';
+
+export const metadata: Metadata = {
+  title: "Sanatana Insights - Eternal Wisdom for Modern Minds",
+  description: "Embark on a transformative journey into Indian philosophy, Sanātana Dharma, and spiritual heritage. Discover texts, concepts, historical timelines, cultural arts, and AI-powered philosophical insights.",
+  keywords: ["Sanatana Dharma", "Indian Philosophy", "Hinduism", "Vedanta", "Yoga", "Spirituality", "Meditation", "Vedas", "Upanishads", "Bhagavad Gita", "Darshanas", "Cultural Arts", "Vedic Science", "Bharat History", "AI Philosopher", "Eternal Wisdom"],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "Sanatana Insights - Eternal Wisdom for Modern Minds",
+    description: "Embark on a transformative journey into Indian philosophy, Sanātana Dharma, and spiritual heritage. Discover texts, concepts, historical timelines, cultural arts, and AI-powered philosophical insights.",
+    url: `${SITE_URL}/`,
+    images: [
+      {
+        url: `${SITE_URL}/og-home.png`, // Replace with a specific OG image for the homepage
+        width: 1200,
+        height: 630,
+        alt: 'Explore Sanatana Insights',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Sanatana Insights - Eternal Wisdom for Modern Minds",
+    description: "Embark on a transformative journey into Indian philosophy, Sanātana Dharma, and spiritual heritage.",
+    images: [`${SITE_URL}/twitter-home.png`], // Replace with a specific Twitter image for the homepage
+  },
+};
 
 const features = [
   {
@@ -29,72 +60,84 @@ const features = [
     href: "/schools",
     description: "Journey through the diverse schools of Indian thought, from Nyāya to Vedānta.",
     icon: <Library className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Understand systematic Indian logic, metaphysics, and paths to liberation."
   },
   {
     title: "Ancient Texts & Scriptures",
     href: "/texts",
     description: "Explore summaries and teachings from the Vedas, Upaniṣads, and Bhagavad Gītā.",
     icon: <ScrollText className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Access the foundational wisdom of Hindu spiritual literature."
   },
   {
     title: "Core Themes & Concepts",
     href: "/concepts",
     description: "Unravel fundamental ideas like Dharma, Karma, and Moksha that shape spiritual understanding.",
     icon: <Brain className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Grasp key philosophical terms and their profound implications."
   },
   {
     title: "Timeline of Wisdom",
     href: "/timeline",
     description: "Trace the chronological evolution of Indian philosophy from ancient to modern times.",
     icon: <CalendarClock className="h-8 w-8 mb-2 text-primary" />,
+    hint: "See how spiritual ideas developed across millennia."
   },
   {
     title: "Saints & Philosophers",
     href: "/saints",
     description: "Discover the lives and profound teachings of spiritual luminaries and great thinkers.",
     icon: <Users className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Learn from the masters who shaped India's spiritual heritage."
   },
   {
     title: "Vedic Science & Technology",
     href: "/vedic-science",
     description: "Uncover ancient wisdom in mathematics, cosmology, sound science, and more.",
     icon: <SigmaSquare className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Explore India's contributions to ancient scientific knowledge."
   },
   {
     title: "Cultural Arts & Heritage",
     href: "/cultural-arts",
     description: "Celebrate Indian music, dance, theatre, rituals, and artistic expressions.",
     icon: <Palette className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Experience the vibrant artistic traditions rooted in spirituality."
   },
    {
     title: "Bharat's Civilizational History",
     href: "/bharat-history",
     description: "Explore India's continuous narrative, from Saraswati-Sindhu to modern times.",
     icon: <Landmark className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Discover the decolonized history of the Indian subcontinent."
   },
   {
     title: "Media Gallery",
     href: "/gallery",
     description: "Immerse yourself in sacred art, chants, and visual depictions of spiritual themes.",
     icon: <ImageIcon className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Visually explore the beauty of Indic spirituality."
   },
   {
     title: "Learning Resources",
     href: "/resources",
     description: "Access downloadable texts, guides, and glossaries to deepen your study.",
     icon: <BookOpen className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Find tools and materials for your learning journey."
   },
   {
     title: "Ask the AI Philosopher",
     href: "/ask-ai",
     description: "Engage with our AI for insights on spiritual and philosophical questions (Coming Soon!).",
     icon: <Lightbulb className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Get AI-powered answers based on ancient scriptures."
   },
   {
     title: "Personalize Your Experience",
     href: "/settings",
     description: "Customize appearance, themes, and preferences to suit your journey.",
     icon: <Settings className="h-8 w-8 mb-2 text-primary" />,
+    hint: "Tailor the application to your visual and interactive preferences."
   },
 ];
 
@@ -113,10 +156,10 @@ export default function HomePage() {
             Embark on a transformative journey into the heart of Indian philosophy, Sanātana Dharma, and timeless spiritual heritage. Discover profound teachings and the enduring wisdom of sages.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Button asChild size="lg" className="shadow-lg text-base px-8 py-3 rounded-lg hover:scale-105 transition-transform">
+            <Button asChild size="lg" className="shadow-lg text-base px-8 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-primary/30">
               <Link href="/concepts">Explore Core Concepts <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="shadow-md text-base px-8 py-3 rounded-lg border-primary text-primary hover:bg-primary/10 hover:scale-105 transition-transform">
+            <Button asChild variant="outline" size="lg" className="shadow-md text-base px-8 py-3 rounded-lg border-primary text-primary hover:bg-primary/10 hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-primary/20">
               <Link href="/schools">Discover Darshanas</Link>
             </Button>
           </div>
@@ -134,7 +177,7 @@ export default function HomePage() {
 
       {/* Introduction to Indian Philosophy and Sanātana Dharma */}
       <section className="container mx-auto px-4 grid md:grid-cols-2 gap-8 items-stretch">
-        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col bg-card">
+        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col bg-card border border-primary/20 hover:border-primary/40">
           <CardHeader>
             <CardTitle className="text-2xl text-primary flex items-center"><Brain className="mr-3 h-7 w-7"/>What is Indian Philosophy?</CardTitle>
           </CardHeader>
@@ -152,7 +195,7 @@ export default function HomePage() {
             </Button>
           </CardFooter>
         </Card>
-        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col bg-card">
+        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col bg-card border border-accent/20 hover:border-accent/40">
           <CardHeader>
             <CardTitle className="text-2xl text-accent flex items-center"><Sparkles className="mr-3 h-7 w-7"/>The Essence of Sanātana Dharma</CardTitle>
           </CardHeader>
@@ -180,13 +223,17 @@ export default function HomePage() {
               Explore the Depths of Wisdom
             </h2>
             <p className="mt-4 text-lg text-foreground/70 max-w-2xl mx-auto">
-              Dive into various facets of Sanatana Dharma and Indian philosophy through our curated sections.
+              Dive into various facets of Sanatana Dharma and Indian philosophy through our curated sections. Each card below gives a glimpse into a unique area of study.
             </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {features.map((feature) => (
-            <Card key={feature.href} className="flex flex-col shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 bg-card/90 backdrop-blur-sm border border-border/20 rounded-xl overflow-hidden">
-              <CardHeader className="items-center text-center bg-muted/30 p-6">
+            <Card 
+              key={feature.href} 
+              className="flex flex-col shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 bg-card/90 backdrop-blur-sm border border-border/20 rounded-xl overflow-hidden hover:border-primary/50 hover:bg-gradient-to-br hover:from-card hover:to-primary/5"
+              title={feature.hint} // Tooltip hint
+            >
+              <CardHeader className="items-center text-center bg-muted/20 p-6">
                 {feature.icon}
                 <CardTitle className="text-xl font-semibold text-primary">{feature.title}</CardTitle>
               </CardHeader>
@@ -195,7 +242,7 @@ export default function HomePage() {
                   {feature.description}
                 </CardDescription>
               </CardContent>
-              <CardFooter className="p-5 mt-auto bg-muted/20">
+              <CardFooter className="p-5 mt-auto bg-muted/10">
                 <Button asChild variant="outline" className="w-full border-primary text-primary hover:bg-primary/10 hover:text-primary transition-colors">
                   <Link href={feature.href}>
                     Explore <ArrowRight className="ml-2 h-4 w-4" />
@@ -219,19 +266,19 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-2xl group transition-all duration-500 ease-in-out hover:scale-105">
-            <Image src="https://i.pinimg.com/736x/e7/5b/95/e75b951b6a006255fb257a50e0123cb9.jpg" alt="Sacred Om Symbolism - Sanatana Insights" layout="fill" objectFit="cover" data-ai-hint="om symbol" className="transform group-hover:scale-110 transition-transform duration-500"/>
+            <Image src="https://i.pinimg.com/736x/e7/5b/95/e75b951b6a006255fb257a50e0123cb9.jpg" alt="Sacred Om Symbolism reflecting ancient Indian spiritual wisdom" layout="fill" objectFit="cover" data-ai-hint="om symbol" className="transform group-hover:scale-110 transition-transform duration-500"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10 flex items-end p-4">
               <p className="text-white text-lg font-semibold drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sacred Symbols</p>
             </div>
           </div>
           <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-2xl group transition-all duration-500 ease-in-out hover:scale-105">
-            <Image src="https://i.pinimg.com/736x/e8/ba/6f/e8ba6ffe55826ca3397454b0cab90d07.jpg" alt="Meditative Art from India - Sanatana Insights" layout="fill" objectFit="cover" data-ai-hint="meditation art" className="transform group-hover:scale-110 transition-transform duration-500"/>
+            <Image src="https://i.pinimg.com/736x/e8/ba/6f/e8ba6ffe55826ca3397454b0cab90d07.jpg" alt="Meditative Art from India inspiring peace and contemplation" layout="fill" objectFit="cover" data-ai-hint="meditation art" className="transform group-hover:scale-110 transition-transform duration-500"/>
              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10 flex items-end p-4">
               <p className="text-white text-lg font-semibold drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">Meditative Art</p>
             </div>
           </div>
           <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-2xl group transition-all duration-500 ease-in-out hover:scale-105">
-            <Image src="https://i.pinimg.com/736x/09/ac/f0/09acf0a1e58041ecab10b5c692a06344.jpg" alt="Cosmic Energy Representations in Indian Philosophy" layout="fill" objectFit="cover" data-ai-hint="spiritual energy" className="transform group-hover:scale-110 transition-transform duration-500"/>
+            <Image src="https://i.pinimg.com/736x/09/ac/f0/09acf0a1e58041ecab10b5c692a06344.jpg" alt="Cosmic Energy Representations in Indian Philosophy and art" layout="fill" objectFit="cover" data-ai-hint="spiritual energy" className="transform group-hover:scale-110 transition-transform duration-500"/>
              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10 flex items-end p-4">
               <p className="text-white text-lg font-semibold drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">Cosmic Energy</p>
             </div>
@@ -258,4 +305,3 @@ export default function HomePage() {
     </div>
   );
 }
-

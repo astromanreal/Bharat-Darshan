@@ -2,10 +2,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, MessageCircle, Users, Send, Linkedin, Twitter, Instagram, Github } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Contact Us - Sanatana Insights",
-  description: "Get in touch with the Sanatana Insights team. We'd love to hear from you!",
+  description: "Get in touch with the Sanatana Insights team. We'd love to hear from you whether you have questions, feedback, or partnership inquiries.",
+  keywords: ["Contact Sanatana Insights", "Feedback", "Inquiries", "Support", "Indian Philosophy Contact", "Spiritual Guidance Contact"],
 };
 
 const socialLinks = [

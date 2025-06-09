@@ -1,8 +1,9 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-// import type { Metadata } from 'next'; // Cannot be used in client component directly
+// import type { Metadata } from 'next'; // Removed static metadata import
 import { historicalErasData, mythsVsRealityData, voicesOfBharatData, type HistoricalEra } from '@/lib/data/bharat-history-data';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -10,6 +11,13 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Landmark, MapPin, BookOpen, Microscope, Waves, University, Route, ShieldQuestion, Users, Languages, Search, Quote } from "lucide-react";
 import Link from 'next/link';
+import { useToast } from "@/hooks/use-toast"; // Added for toast notifications
+
+// Note: For Client Components, 'export const metadata' is not directly used by Next.js for SSR meta tags
+// in the same way as Server Components. Title updates are typically done with useEffect.
+// However, providing it can be useful for documentation or if the component structure changes.
+// Removed: export const metadata: Metadata = { ... };
+
 
 // Helper to select an icon based on content type
 const getIconForContentType = (type: string): JSX.Element => {
@@ -26,19 +34,25 @@ const getIconForContentType = (type: string): JSX.Element => {
 
 export default function BharatHistoryPage() {
   const [selectedEra, setSelectedEra] = useState<HistoricalEra | null>(null);
+  const { toast } = useToast(); // Initialize toast
 
   useEffect(() => {
     // Set a default era on initial load
     if (historicalErasData.length > 0) {
       setSelectedEra(historicalErasData[0]);
     }
-    // Dynamic title setting
-    document.title = "Bharat’s Civilizational History Explorer - Sanatana Insights";
+    // Set a default title if no era is selected initially
+    if (!selectedEra && historicalErasData.length > 0) {
+        document.title = "Bharat’s Civilizational History Explorer - Sanatana Insights";
+    }
   }, []);
 
   useEffect(() => {
     if (selectedEra) {
       document.title = `${selectedEra.name} - History Explorer - Sanatana Insights`;
+    } else {
+      // Fallback title if selectedEra becomes null after initial load
+      document.title = "Bharat’s Civilizational History Explorer - Sanatana Insights";
     }
   }, [selectedEra]);
 
@@ -46,6 +60,13 @@ export default function BharatHistoryPage() {
   const handleEraSelect = (eraId: string) => {
     const era = historicalErasData.find(e => e.id === eraId);
     setSelectedEra(era || null);
+  };
+
+  const handleComingSoonFeature = (featureName: string) => {
+    toast({
+      title: "Feature Coming Soon",
+      description: `${featureName} functionality is under development. Please check back later!`,
+    });
   };
 
   return (
@@ -112,7 +133,6 @@ export default function BharatHistoryPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   {selectedEra.archaeologicalFindings.map(finding => (
                     <Card key={finding.id} className="shadow-md hover:shadow-lg transition-shadow">
-                      {/* Image removed from here */}
                       <CardHeader>
                         <CardTitle className="text-xl text-primary">{finding.title}</CardTitle>
                       </CardHeader>
@@ -129,11 +149,10 @@ export default function BharatHistoryPage() {
             {/* Ancient Cities */}
              {selectedEra.ancientCities && selectedEra.ancientCities.length > 0 && (
               <section>
-                <h3 className="text-2xl font-semibold text-accent mb-4 flex items-center">{getIconForContentType('cities')} Ancient Cities & Urban Planning</h3>
+                <h3 className="text-2xl font-semibold text-accent mb-4 flex items-center">{getIconForContentType('cities')} Ancient Cities &amp; Urban Planning</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   {selectedEra.ancientCities.map(city => (
                     <Card key={city.id} className="shadow-md hover:shadow-lg transition-shadow">
-                       {/* Image removed from here */}
                       <CardHeader>
                         <CardTitle className="text-xl text-primary">{city.name}</CardTitle>
                       </CardHeader>
@@ -156,7 +175,6 @@ export default function BharatHistoryPage() {
               <section>
                 <h3 className="text-2xl font-semibold text-accent mb-4 flex items-center">{getIconForContentType('rivers')} River Evolution: {selectedEra.riverEvolution.riverName}</h3>
                 <Card className="shadow-md hover:shadow-lg transition-shadow">
-                    {/* Image removed from here */}
                   <CardContent className="pt-6">
                     <p className="text-foreground/80 mb-2">{selectedEra.riverEvolution.significance}</p>
                     {selectedEra.riverEvolution.evidence && <p className="text-sm text-muted-foreground">Evidence: {selectedEra.riverEvolution.evidence}</p>}
@@ -168,7 +186,7 @@ export default function BharatHistoryPage() {
             {/* Temples and Architecture (Keeping mini image gallery as it's different from single card image) */}
             {selectedEra.templesAndArchitecture && selectedEra.templesAndArchitecture.length > 0 && (
               <section>
-                <h3 className="text-2xl font-semibold text-accent mb-4 flex items-center">{getIconForContentType('temples')} Temples & Architecture</h3>
+                <h3 className="text-2xl font-semibold text-accent mb-4 flex items-center">{getIconForContentType('temples')} Temples &amp; Architecture</h3>
                 <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
                   {selectedEra.templesAndArchitecture.map(temple => (
                     <Card key={temple.id} className="shadow-md hover:shadow-lg transition-shadow">
@@ -198,11 +216,10 @@ export default function BharatHistoryPage() {
             {/* Ancient Universities */}
             {selectedEra.ancientUniversities && selectedEra.ancientUniversities.length > 0 && (
               <section>
-                <h3 className="text-2xl font-semibold text-accent mb-4 flex items-center">{getIconForContentType('universities')} Ancient Universities & Knowledge Hubs</h3>
+                <h3 className="text-2xl font-semibold text-accent mb-4 flex items-center">{getIconForContentType('universities')} Ancient Universities &amp; Knowledge Hubs</h3>
                  <div className="grid md:grid-cols-2 gap-6">
                     {selectedEra.ancientUniversities.map(uni => (
                          <Card key={uni.id} className="shadow-md hover:shadow-lg transition-shadow">
-                             {/* Image removed from here */}
                              <CardHeader>
                                 <CardTitle className="text-xl text-primary">{uni.name}</CardTitle>
                                 <CardDescription>{uni.period}</CardDescription>
@@ -252,9 +269,9 @@ export default function BharatHistoryPage() {
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {voicesOfBharatData.map((voice) => (
-            <Card key={voice.id} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col bg-secondary/5 rounded-lg">
-              <CardContent className="p-6 flex-grow flex flex-col items-center text-center justify-center">
-                <Quote className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-3 sm:mb-4" />
+            <Card key={voice.id} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col bg-secondary/5 rounded-lg overflow-hidden">
+              <CardContent className="p-6 flex-grow flex flex-col items-center text-center">
+                <Quote className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-3 sm:mb-4 flex-shrink-0" />
                 <blockquote className="italic text-base sm:text-lg text-foreground/85 mb-4 sm:mb-6 flex-grow">
                   &quot;{voice.quote}&quot;
                 </blockquote>
@@ -278,10 +295,10 @@ export default function BharatHistoryPage() {
             <Button variant="default" size="lg" className="shadow-md">
                 <Link href="/concepts">Explore Key Concepts</Link>
             </Button>
-            <Button variant="outline" size="lg" className="shadow-md flex items-center" onClick={() => alert("Language toggle clicked!")}>
+            <Button variant="outline" size="lg" className="shadow-md flex items-center" onClick={() => handleComingSoonFeature('Language Toggle')}>
                 <Languages className="mr-2 h-5 w-5" /> Toggle Language (EN/HI/SA)
             </Button>
-            <Button variant="outline" size="lg" className="shadow-md flex items-center" onClick={() => alert("Search filter clicked!")}>
+            <Button variant="outline" size="lg" className="shadow-md flex items-center" onClick={() => handleComingSoonFeature('History Filter')}>
                <Search className="mr-2 h-5 w-5" /> Filter History (Coming Soon)
             </Button>
         </div>
@@ -289,3 +306,7 @@ export default function BharatHistoryPage() {
     </div>
   );
 }
+
+    
+
+    

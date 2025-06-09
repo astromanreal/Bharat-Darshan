@@ -2,11 +2,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { Users, BookOpen, MapPin, MessageSquare, Landmark, BookMarked, Sparkles as SparklesIcon, ScrollText, Heart, Lightbulb } from "lucide-react"; // Added Lightbulb
+import { Users, BookOpen, MapPin, MessageSquare, Landmark, BookMarked, Sparkles as SparklesIcon, ScrollText, Heart, Lightbulb, ArrowRight } from "lucide-react"; 
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Saints & Philosophers - Sanatana Insights",
-  description: "Discover the lives and teachings of eminent saints, sages, and philosophers who shaped Indian thought.",
+export const metadata: Metadata = {
+  title: "Saints & Philosophers of India - Teachings & Biographies - Sanatana Insights",
+  description: "Discover the lives, teachings, and philosophies of eminent saints, sages, and thinkers like Adi Shankaracharya, Ramanujacharya, Patanjali, Buddha, and Swami Vivekananda who shaped Indian thought.",
+  keywords: ["Indian Saints", "Hindu Philosophers", "Spiritual Masters India", "Adi Shankaracharya", "Ramanujacharya", "Patanjali", "Buddha", "Swami Vivekananda", "Advaita Vedanta", "Vishishtadvaita", "Yoga Philosophy", "Bhakti Saints", "Vedanta Teachers"],
 };
 
 const saintsDataRaw = [
@@ -334,21 +336,21 @@ export default function SaintsPage() {
         {saints.map((saint) => (
           <Card 
             key={saint.slug} 
-            className="flex flex-col overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 bg-gradient-to-br from-card via-muted/20 to-card border-primary/20 rounded-lg"
+            className="flex flex-col overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 bg-gradient-to-br from-card via-background to-muted/30 border border-border/30 hover:border-primary/50 rounded-lg group"
           >
-            <CardHeader className="bg-gradient-to-b from-primary/20 via-primary/10 to-transparent p-6">
-              <div className="flex items-center space-x-4 mb-2">
-                <Lightbulb className="h-10 w-10 text-primary flex-shrink-0" />
+            <CardHeader className="bg-gradient-to-b from-primary/10 via-primary/5 to-transparent p-6 border-b border-primary/20">
+              <div className="flex items-start space-x-4 mb-2">
+                <Lightbulb className="h-10 w-10 text-primary flex-shrink-0 group-hover:text-yellow-400 transition-colors" />
                 <div>
-                  <CardTitle className="text-2xl lg:text-3xl font-bold text-primary drop-shadow-md">{saint.name}</CardTitle>
-                  <CardDescription className="text-md text-accent font-semibold">{saint.philosophy}</CardDescription>
+                  <CardTitle className="text-2xl lg:text-3xl font-bold text-primary drop-shadow-sm group-hover:text-primary/90 transition-colors">{saint.name}</CardTitle>
+                  <CardDescription className="text-md text-accent font-semibold group-hover:text-accent/80 transition-colors">{saint.philosophy}</CardDescription>
                 </div>
               </div>
               <p className="text-xs text-muted-foreground">{saint.era} &bull; {saint.birthPlace}</p>
             </CardHeader>
             
             <CardContent className="p-6 flex-grow flex flex-col">
-              <p className="text-foreground/85 leading-relaxed text-sm mb-5 line-clamp-5 flex-grow">
+              <p className="text-foreground/85 leading-relaxed text-sm mb-5 line-clamp-4 flex-grow group-hover:text-foreground transition-colors">
                 {saint.biography}
               </p>
 
@@ -370,7 +372,7 @@ export default function SaintsPage() {
                 )}
               </div>
             </CardContent>
-            {/* Learn more button removed as per user request */}
+            {/* "Learn More" button is intentionally removed as per the last request */}
           </Card>
         ))}
       </div>
@@ -386,3 +388,4 @@ export default function SaintsPage() {
   );
 }
 
+    

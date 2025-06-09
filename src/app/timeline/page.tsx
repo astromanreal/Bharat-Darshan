@@ -1,10 +1,11 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Milestone, CalendarClock, Users, Lightbulb, BookOpen } from "lucide-react";
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Timeline of Wisdom - Sanatana Insights",
-  description: "Trace the chronological evolution of Indian philosophy from ancient Vedic times to modern spiritual movements.",
+export const metadata: Metadata = {
+  title: "Timeline of Indian Philosophy & Wisdom - Sanatana Insights",
+  description: "Trace the chronological evolution of Indian philosophy, spiritual thought, and key developments from the ancient Vedic period to modern spiritual movements and thinkers.",
+  keywords: ["Indian Philosophy Timeline", "History of Hinduism", "Vedic Period", "Upanishadic Period", "Classical Indian Philosophy", "Bhakti Movement", "Modern Indian Thought", "Spiritual History India", "Philosophical Evolution"],
 };
 
 const timelineData = {

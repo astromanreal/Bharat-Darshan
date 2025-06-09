@@ -3,10 +3,12 @@ import { Construction, Lightbulb, Quote, BookOpenText, History, Trophy, ListChec
 import Link from "next/link";
 import QuizClient from "@/components/quiz-client"; 
 import { ShlokaDisplay } from "@/components/shloka-display";
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Learn & Quiz - Sanatana Insights",
-  description: "Engage with interactive quizzes on core Sanatana Dharma concepts and track your progress. Our Philosopher AI is under development.",
+export const metadata: Metadata = {
+  title: "Ask AI & Quiz - Philosophical Insights - Sanatana Insights",
+  description: "Engage with interactive quizzes on Sanatana Dharma and prepare to ask our upcoming AI Philosopher your spiritual and philosophical questions.",
+  keywords: ["AI Philosopher", "Sanatana Dharma Quiz", "Indian Philosophy AI", "Spiritual Questions", "Interactive Learning", "Hinduism AI", "Philosophy Quiz"],
 };
 
 export default function AskAiPage() {

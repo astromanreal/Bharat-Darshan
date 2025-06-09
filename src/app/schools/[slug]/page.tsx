@@ -1,3 +1,4 @@
+
 "use client";
 import { getSchoolBySlug, getAllSchoolSlugs, type SchoolDetail, type PadarthaCategory, type Pramana, type KeyConceptDetail, type TattvaConcept, type Thinker, type ComparisonDetail, type CommentaryWork, type VedantaSubSchool } from '@/lib/data/philosophical-schools';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -5,25 +6,19 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Target, Users, Brain, GitFork, Book, History, Rss, Lightbulb, CheckCircle, HelpCircle, Atom, Microscope, Combine, Users2, Zap, ListTree, Columns, Drama, Wind, Waves, HeartHandshake, ShieldAlert, GitMerge, Sprout, BrainCog, AlignCenter, Package, Pyramid, Gem, UsersRound, BookHeart, Award, UserCheck, UserPlus } from 'lucide-react';
-import type { Metadata } from 'next';
-import { notFound, useParams } from 'next/navigation'; // Use useParams for client components
+// Removed: import type { Metadata } from 'next'; // Not used for dynamic title in client components
+import { notFound, useParams } from 'next/navigation'; 
 import { useEffect, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { mockUser } from '@/lib/constants';
 
-
-// export async function generateStaticParams() { // Only for Server Components generating static paths
-//   return getAllSchoolSlugs();
-// }
-
-// Metadata generation should remain if this page can also be a Server Component, but for client-side dynamic rendering, it's less critical here.
-// Or it can be moved to a parent layout if params are available.
-// For now, let's assume dynamic title based on client-side data fetching.
+// For client components, metadata is typically handled via useEffect for document.title
+// and potentially server-side logic if full meta tags are needed per slug.
 
 export default function SchoolDetailPageClient() {
   const params = useParams();
   const slug = typeof params.slug === 'string' ? params.slug : '';
-  const [school, setSchool] = useState<SchoolDetail | null | undefined>(undefined); // undefined for loading state
+  const [school, setSchool] = useState<SchoolDetail | null | undefined>(undefined); 
   const [isEnrolled, setIsEnrolled] = useState(false);
   const { toast } = useToast();
 
@@ -31,29 +26,28 @@ export default function SchoolDetailPageClient() {
     if (slug) {
       const schoolData = getSchoolBySlug(slug);
       setSchool(schoolData);
-      // Simulate fetching user's enrolled school
-      if (schoolData && mockUser.enrolledSchoolSlug === schoolData.slug) {
-        setIsEnrolled(true);
+      if (schoolData) {
+        // Dynamically set the document title
+        document.title = `${schoolData.name} | Darshana - Sanatana Insights`;
+        // Simulate fetching user's enrolled school
+        if (mockUser.enrolledSchoolSlug === schoolData.slug) {
+          setIsEnrolled(true);
+        } else {
+          setIsEnrolled(false);
+        }
       } else {
-        setIsEnrolled(false);
+        document.title = "School Not Found - Sanatana Insights";
       }
     }
   }, [slug]);
   
-  // This useEffect must be called unconditionally before any early returns.
-  useEffect(() => {
-    if (school) {
-      document.title = `${school.name} - Philosophical School - Sanatana Insights`;
-    }
-  }, [school]);
-
 
   if (school === undefined) {
     return <div className="container mx-auto py-12 px-4 text-center">Loading school details...</div>;
   }
 
   if (!school) {
-    notFound(); // Or handle as a client-side not found
+    notFound(); 
     return null;
   }
 
@@ -61,24 +55,21 @@ export default function SchoolDetailPageClient() {
     if (!school) return;
 
     if (isEnrolled) {
-      // Mock unenroll
       setIsEnrolled(false);
-      mockUser.enrolledSchoolSlug = null; // Update mock data
+      mockUser.enrolledSchoolSlug = null; 
       toast({
         title: "Unenrolled",
         description: `You have unenrolled from ${school.name}.`,
         variant: "default",
       });
     } else {
-      // Mock enroll
       setIsEnrolled(true);
-      mockUser.enrolledSchoolSlug = school.slug; // Update mock data
+      mockUser.enrolledSchoolSlug = school.slug; 
       toast({
         title: "Successfully Enrolled!",
         description: `You are now enrolled in the ${school.name} school.`,
       });
     }
-    // In a real app: await enrollInSchoolAction(school.slug);
   };
 
 
@@ -227,7 +218,7 @@ export default function SchoolDetailPageClient() {
               </Badge>
             )}
           </div>
-          {school.corePhilosophy.theismDescription && <p className="mt-3 p-3 bg-accent/10 text-accent-foreground/90 border border-accent/30 rounded-md"><span className="font-semibold text-accent">Theistic Stance:</span> {school.corePhilosophy.theismDescription}</p>}
+          {school.corePhilosophy.theismDescription && <p className="mt-3 p-3 bg-accent/10 text-accent-foreground/90 border border-accent/30 rounded-md shadow-sm"><span className="font-semibold text-accent">Theistic Stance:</span> {school.corePhilosophy.theismDescription}</p>}
         </InfoCard>
 
         <InfoCard icon={<Lightbulb className="h-7 w-7 text-primary" />} title="Key Concepts">
@@ -571,12 +562,3 @@ function Section({ title, children }: SectionProps) {
     </div>
   );
 }
-
-// This is now primarily a client component.
-// If you need generateStaticParams, it means you want to pre-render these pages.
-// In that case, data fetching (getSchoolBySlug) would happen at build time (server-side).
-// The client-side interactions (enrollment, toast) would still be client-side.
-// For this example, making it fully client-rendered simplifies state management for mock interactions.
-
-
-

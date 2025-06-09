@@ -5,12 +5,12 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { mockUser, mockSchoolsData, getSchoolBySlugMock, type MockSchool, type MockUser } from "@/lib/constants";
-import { getConceptBySlug as getConceptDataBySlug, type DetailedConcept } from "@/lib/data/concepts-data"; // Updated import
+import { getConceptBySlug as getConceptDataBySlug, type DetailedConcept } from "@/lib/data/concepts-data";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Award, BookOpen, Heart, Activity, Users, Compass, Star, Edit3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -26,7 +26,7 @@ const getInitials = (name: string) => {
 export function UserProfileClient() {
   const [user, setUser] = useState<MockUser>(mockUser);
   const [enrolledSchool, setEnrolledSchool] = useState<MockSchool | null | undefined>(null);
-  const [likedConcepts, setLikedConcepts] = useState<DetailedConcept[]>([]); // Changed to DetailedConcept
+  const [likedConcepts, setLikedConcepts] = useState<DetailedConcept[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -35,7 +35,6 @@ export function UserProfileClient() {
     } else {
       setEnrolledSchool(null);
     }
-    // Use likedConceptSlugs and getConceptDataBySlug
     setLikedConcepts(user.likedConceptSlugs.map(slug => getConceptDataBySlug(slug)).filter(c => c !== undefined) as DetailedConcept[]);
   }, [user]);
 
@@ -60,7 +59,7 @@ export function UserProfileClient() {
     }
   };
 
-  const pointsToNextLevel = (user.level + 1) * 1000; // Example calculation
+  const pointsToNextLevel = (user.level + 1) * 1000;
   const progressPercentage = Math.min((user.points / pointsToNextLevel) * 100, 100);
 
   return (
@@ -75,9 +74,24 @@ export function UserProfileClient() {
             </Avatar>
             <CardTitle className="text-2xl">{user.name}</CardTitle>
             <CardDescription className="text-accent">{user.username}</CardDescription>
-             <Button variant="outline" size="sm" className="mt-2">
-                <Edit3 className="mr-2 h-4 w-4" /> Edit Profile
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline" size="sm" className="mt-2">
+                  <Edit3 className="mr-2 h-4 w-4" /> Edit Profile
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Feature Not Yet Available</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Profile editing functionality is coming soon. Please check back later!
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Close</AlertDialogCancel>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardHeader>
           <CardContent className="text-center">
             <div className="space-y-2">
@@ -110,7 +124,7 @@ export function UserProfileClient() {
                 <p className="text-foreground/80 mb-3">You are not currently enrolled in any philosophical school.</p>
                 <p className="text-sm text-muted-foreground mb-2">Choose a school to deepen your study:</p>
                 <div className="space-y-2">
-                {mockSchoolsData.slice(0,3).map(school => ( // Show a few options
+                {mockSchoolsData.slice(0,3).map(school => ( 
                     <Button key={school.slug} variant="outline" size="sm" className="w-full justify-start" onClick={() => handleEnrollInSchool(school.slug)}>
                         Enroll in {school.name}
                     </Button>
@@ -136,11 +150,9 @@ export function UserProfileClient() {
               <ul className="space-y-3">
                 {likedConcepts.map(concept => (
                   <li key={concept.slug} className="p-3 bg-muted/50 rounded-md hover:bg-muted transition-colors">
-                    {/* Link to the new concept detail page */}
                     <Link href={`/concepts/${concept.slug}`} className="block">
-                        <h4 className="font-medium text-primary">{concept.name}</h4>
-                        {/* Use meaning as a short summary if needed, or remove if too long */}
-                        <p className="text-xs text-foreground/70 line-clamp-2">{concept.meaning}</p>
+                        <h4 className="font-medium text-primary">{concept.title || concept.name}</h4>
+                        <p className="text-xs text-foreground/70 line-clamp-2">{typeof concept.meaning === 'string' ? concept.meaning : Object.values(concept.meaning)[0]}</p>
                     </Link>
                   </li>
                 ))}
@@ -209,3 +221,5 @@ export function UserProfileClient() {
     </div>
   );
 }
+
+    

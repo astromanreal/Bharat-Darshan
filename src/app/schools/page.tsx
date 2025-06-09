@@ -2,10 +2,36 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Library, GitFork, User, Target, BookOpen, ChevronsRight, CheckCircle, FileText, BookHeart, ArrowRight } from "lucide-react";
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Philosophical Schools - Sanatana Insights",
-  description: "Explore the diverse schools of Indian philosophy (Darshanas), their core principles, founders, and key texts.",
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sanatanainsights.com';
+
+export const metadata: Metadata = {
+  title: "Philosophical Schools of India (Darshanas) - Sanatana Insights",
+  description: "Explore the six classical schools (Āstika Darshanas) of Indian philosophy: Nyāya, Vaiśeṣika, Sāṃkhya, Yoga, Mīmāṃsā, and Vedānta, including their core principles and texts.",
+  keywords: ["Indian Philosophical Schools", "Darshanas", "Astika Schools", "Nyaya", "Vaisheshika", "Samkhya", "Yoga Philosophy", "Mimamsa", "Vedanta", "Hindu Philosophy Systems", "Indian Logic", "Metaphysics", "Ancient Indian Wisdom"],
+  alternates: {
+    canonical: '/schools',
+  },
+  openGraph: {
+    title: "Philosophical Schools of India (Darshanas) - Sanatana Insights",
+    description: "Dive into Nyāya, Vaiśeṣika, Sāṃkhya, Yoga, Mīmāṃsā, and Vedānta - the foundational systems of Indian thought.",
+    url: `${SITE_URL}/schools`,
+    images: [
+      {
+        url: `${SITE_URL}/og-schools.png`, // Replace with a specific OG image for this page
+        width: 1200,
+        height: 630,
+        alt: 'The Six Darshanas of Indian Philosophy',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Philosophical Schools of India (Darshanas) - Sanatana Insights",
+    description: "Explore the six classical schools of Indian philosophy and their core teachings.",
+    images: [`${SITE_URL}/twitter-schools.png`], // Replace with a specific Twitter image
+  },
 };
 
 const schoolsData = [
@@ -37,7 +63,7 @@ const schoolsData = [
     text: "Vaiśeṣika Sūtras",
     importance: "Early precursor to scientific thought in Indian philosophy; complements Nyāya logic",
     slug: "vaisheshika",
-    icon: <GitFork className="h-10 w-10 text-primary" />,
+    icon: <GitFork className="h-10 w-10 text-primary" />, // Consider Atom icon if available & distinct
   },
   {
     name: "Sāṃkhya",
@@ -52,7 +78,7 @@ const schoolsData = [
     text: "Sāṃkhya Kārikā",
     importance: "Influenced Yoga and Vedānta; one of the oldest schools of metaphysics in India",
     slug: "samkhya",
-    icon: <GitFork className="h-10 w-10 text-primary" />,
+    icon: <GitFork className="h-10 w-10 text-primary" />, // Consider Layers or Package icon
   },
   {
     name: "Yoga",
@@ -67,7 +93,7 @@ const schoolsData = [
     text: "Yoga Sūtras of Patañjali",
     importance: "Basis for classical and modern yoga; bridges philosophy and practice",
     slug: "yoga",
-    icon: <GitFork className="h-10 w-10 text-primary" />,
+    icon: <GitFork className="h-10 w-10 text-primary" />, // Consider Sprout or BrainCog icon
   },
   {
     name: "Pūrva Mīmāṃsā",
@@ -97,7 +123,7 @@ const schoolsData = [
     text: "Brahma Sūtras, Upaniṣads, Bhagavad Gītā (Prasthāna Trayī)",
     importance: "Most influential school in modern Hindu thought; inspired bhakti, jñāna, and yoga traditions",
     slug: "vedanta",
-    icon: <BookHeart className="h-10 w-10 text-secondary" />,
+    icon: <BookHeart className="h-10 w-10 text-secondary" />, // Consider Gem icon
   },
 ];
 

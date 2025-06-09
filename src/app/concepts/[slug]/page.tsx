@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useParams, notFound, useRouter } from 'next/navigation';
@@ -9,7 +8,7 @@ import { getConceptBySlug, interconnectedWisdomText, holisticUnderstandingText, 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { BookOpenText, Brain, Lightbulb, Target, MessageSquare, Sparkles, Link as LinkIcon, ScanSearch, TrendingUp, Speaker, Layers, CheckCircle, AlignLeft, Pyramid, Network, Orbit, Sun, ShieldAlert, Users, Flame, Activity, Anchor, Scale, ArrowLeft, Share2 } from 'lucide-react'; 
+import { BookOpenText, Brain, Lightbulb, Target, MessageSquare, Sparkles, Link as LinkIconLucide, ScanSearch, TrendingUp, Speaker, Layers, CheckCircle, AlignLeft, Pyramid, Network, Orbit, Sun, ShieldAlert, Users, Flame, Activity, Anchor, Scale, ArrowLeft, Share2 } from 'lucide-react'; 
 
 function renderExample(example: DetailedConceptExample, conceptName: string) {
   if (typeof example === 'string') {
@@ -208,16 +207,16 @@ export default function ConceptDetailPage() {
     if (slug) {
       const conceptData = getConceptBySlug(slug);
       setConcept(conceptData);
+      if (conceptData) {
+        document.title = `${conceptData.title || conceptData.name} - Concept - Sanatana Insights`;
+        // For full SEO, meta description and keywords would ideally also be set.
+        // This is limited in client components.
+      } else {
+        document.title = "Concept Not Found - Sanatana Insights";
+      }
     }
   }, [slug]);
 
-  useEffect(() => {
-    if (concept) {
-      document.title = `${concept.title || concept.name} - Concept - Sanatana Insights`;
-    } else if (concept === null) {
-      document.title = "Concept Not Found - Sanatana Insights";
-    }
-  }, [concept]);
 
   if (concept === undefined) {
     return <div className="container mx-auto py-12 px-4 text-center">Loading concept details...</div>;
@@ -593,5 +592,3 @@ function InfoCard({ icon, title, children }: InfoCardProps) {
     </Card>
   );
 }
-
-

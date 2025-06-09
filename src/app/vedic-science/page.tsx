@@ -7,18 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react"; // Added useEffect import
 import {
   Sigma, Calculator, Brain, Orbit, Telescope, Hourglass, Waves, Music, BrainCog, Rocket, Plane, Scroll,
   Leaf, Atom, Combine, Stethoscope, Gem, Droplets, Users, BookOpen, Mic, Film, Search, ShieldQuestion,
   Lightbulb, SlidersHorizontal, SigmaSquare, Sparkles
 } from "lucide-react";
+// Removed: import type { Metadata } from 'next';
 
-// Metadata should be exported from server components or handled differently for client components
-// For now, we remove it here as this will be a client component.
-// export const metadata: Metadata = {
-//   title: "Vedic Science & Technology - Sanatana Insights",
-//   description: "Explore Vedic mathematics, cosmology, sound science, ancient technologies, and more. Bridging ancient wisdom with modern inquiry.",
-// };
+// Removed disallowed metadata export for client component
+// export const metadata: Metadata = { ... };
 
 const vedicMathSutras = [
   { id: "nikhilam", name: "Nikhilam Navatashcaramam Dashatah", description: "('All from 9 and the last from 10') - Used for subtraction and multiplication, especially with numbers near a base (10, 100, etc.).", example: "97 x 98: Deviations from 100 are -3 and -2. Product of deviations: (-3)x(-2)=6. Cross-subtract: 97-2=95 (or 98-3=95). Answer: 9506." },
@@ -62,6 +60,10 @@ const researchers = [
 ];
 
 export default function VedicSciencePage() {
+  useEffect(() => {
+    document.title = "Vedic Science & Ancient Indian Technology - Sanatana Insights";
+  }, []);
+
   return (
     <div className="container mx-auto py-8 space-y-16">
       {/* Hero Section */}
@@ -110,7 +112,6 @@ export default function VedicSciencePage() {
                   <AccordionContent className="space-y-2 p-4 bg-muted/30 rounded-md">
                     <p className="text-foreground/80">{sutra.description}</p>
                     <p className="text-sm text-primary"><span className="font-medium">Example:</span> {sutra.example}</p>
-                    {/* Placeholder for animated example */}
                     <div className="my-4 p-4 border border-dashed border-primary/50 rounded-md text-center">
                       <Brain className="h-8 w-8 text-primary mx-auto mb-2" />
                       <p className="text-sm text-muted-foreground">Imagine an animation here showing this calculation unfold step-by-step!</p>
@@ -136,7 +137,7 @@ export default function VedicSciencePage() {
       {/* Section 2: Vedic Cosmology */}
       <section>
         <Card className="shadow-xl">
-          <CardHeader>
+           <CardHeader>
              <div className="flex items-center space-x-3">
                 <Telescope className="h-10 w-10 text-primary" />
                 <div>
@@ -367,4 +368,3 @@ export default function VedicSciencePage() {
     </div>
   );
 }
-

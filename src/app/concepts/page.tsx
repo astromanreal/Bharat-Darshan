@@ -8,12 +8,17 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { mockUser } from "@/lib/constants";
 import { detailedConceptsData, type DetailedConcept, getConceptTitle } from "@/lib/data/concepts-data"; 
+// Removed: import type { Metadata } from 'next';
+
+// Removed disallowed metadata export for client component
+// export const metadata: Metadata = { ... };
 
 export default function ConceptsPage() {
   const [likedConcepts, setLikedConcepts] = useState<string[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
+    document.title = "Core Themes & Concepts of Indian Philosophy - Sanatana Insights";
     const currentLiked = [...mockUser.likedConceptSlugs];
     setLikedConcepts(currentLiked);
   }, []);
@@ -44,9 +49,8 @@ export default function ConceptsPage() {
     if (typeof concept.meaning === 'string') {
       return concept.meaning;
     }
-    // For object meanings, try to find a "summary" or "viveka" or first key.
     if (concept.meaning.summary) return concept.meaning.summary;
-    if (concept.meaning.viveka) return concept.meaning.viveka; // For VivekaVairagya like cases
+    if (concept.meaning.viveka) return concept.meaning.viveka; 
     const firstKey = Object.keys(concept.meaning)[0];
     if (firstKey) return concept.meaning[firstKey];
     return "Explore this concept";
@@ -67,7 +71,7 @@ export default function ConceptsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {detailedConceptsData.map((concept) => {
-          const IconComponent = concept.icon || Brain; // Fallback icon
+          const IconComponent = concept.icon || Brain; 
           return (
             <Card key={concept.slug} className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="flex-row items-start justify-between space-x-4">
@@ -108,4 +112,3 @@ export default function ConceptsPage() {
     </div>
   );
 }
-

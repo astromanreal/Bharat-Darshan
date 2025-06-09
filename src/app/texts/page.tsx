@@ -4,10 +4,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { BookText, Layers, ExternalLink, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Texts & Scriptures - Sanatana Insights",
-  description: "Explore summaries, teachings, and key shlokas from the Vedas, Upanishads, Bhagavad Gita, and other foundational scriptures of Indian philosophy. Discover our detailed archive.",
+export const metadata: Metadata = {
+  title: "Sacred Texts & Scriptures of India - Sanatana Insights",
+  description: "Explore summaries, teachings, and key shlokas from the Vedas, Upanishads, Bhagavad Gita, and other foundational scriptures of Indian philosophy. Access our detailed archive.",
+  keywords: ["Indian Scriptures", "Hindu Texts", "Vedas", "Upanishads", "Bhagavad Gita", "Sacred Texts India", "Spiritual Literature", "Philosophical Texts", "Sanatana Dharma Scriptures"],
 };
 
 // Placeholder data

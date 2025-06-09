@@ -5,7 +5,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "My Profile - Sanatana Insights",
-  description: "View your progress, enrolled school, liked concepts, and activity on Sanatana Insights.",
+  description: "View your progress, enrolled philosophical school, liked concepts, and activity on Sanatana Insights. Personalize your learning journey.",
+  keywords: ["User Profile", "Spiritual Journey Tracker", "Learning Progress", "Philosophy School Enrollment", "Personalized Learning", "Sanatana Dharma Profile"],
 };
 
 export default function ProfilePage() {

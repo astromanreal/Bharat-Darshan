@@ -1,10 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download, BookOpen, PlaySquare, ListChecks } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Learning & Resources - Sanatana Insights",
-  description: "Access downloadable scriptures, reading guides, video lectures, podcasts, and a glossary of Sanskrit terms to deepen your understanding of Indian philosophy.",
+export const metadata: Metadata = {
+  title: "Learning Resources for Indian Philosophy - Sanatana Insights",
+  description: "Access downloadable scriptures, reading guides, video lectures, podcasts, and a glossary of Sanskrit terms to deepen your study of Sanatana Dharma and Indian philosophy.",
+  keywords: ["Indian Philosophy Resources", "Sanatana Dharma Study Material", "Downloadable Scriptures", "Vedanta Guides", "Sanskrit Glossary", "Spiritual Learning", "Hinduism Resources", "Vedic Texts Download"],
 };
 
 export default function ResourcesPage() {

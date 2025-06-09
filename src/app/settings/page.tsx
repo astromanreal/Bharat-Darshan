@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Palette, Check } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+// Removed: import type { Metadata } from 'next';
 
 const colorThemes = [
   { name: "Default", className: "theme-default", primaryColor: "hsl(30 100% 60%)" },
@@ -25,26 +26,19 @@ export default function SettingsPage() {
 
   useEffect(() => {
     setMounted(true);
+    document.title = "Appearance Settings - Sanatana Insights"; 
     const storedColorTheme = localStorage.getItem(COLOR_THEME_KEY);
     if (storedColorTheme && colorThemes.some(t => t.className === storedColorTheme)) {
       setActiveColorTheme(storedColorTheme);
+      colorThemes.forEach(ct => document.documentElement.classList.remove(ct.className));
       document.documentElement.classList.add(storedColorTheme);
     } else {
-      // Apply default theme if nothing stored or invalid
+      colorThemes.forEach(ct => document.documentElement.classList.remove(ct.className));
       document.documentElement.classList.add("theme-default");
     }
-
-    // Cleanup function to remove theme class when component unmounts or before new theme is applied
-    return () => {
-      colorThemes.forEach(ct => {
-        document.documentElement.classList.remove(ct.className);
-      });
-    };
   }, []);
   
   useEffect(() => {
-    // This effect ensures the activeColorTheme is applied when it changes
-    // and cleans up old theme classes.
     if (mounted) {
       colorThemes.forEach(ct => {
         document.documentElement.classList.remove(ct.className);
@@ -60,7 +54,7 @@ export default function SettingsPage() {
   };
 
   if (!mounted) {
-    return null; // Or a loading spinner
+    return null; 
   }
 
   return (

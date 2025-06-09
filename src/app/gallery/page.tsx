@@ -1,10 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Image as ImageIcon, Music2, Film } from "lucide-react";
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: "Media Gallery - Sanatana Insights",
-  description: "Explore sacred chants, visuals of ancient manuscripts, mandalas, philosophical art, and animated stotras inspired by Indian tradition.",
+export const metadata: Metadata = {
+  title: "Media Gallery - Spiritual Art & Visuals - Sanatana Insights",
+  description: "Explore sacred Indian art, spiritual visuals, mandalas, philosophical depictions, and images inspired by Sanatana Dharma traditions.",
+  keywords: ["Indian Spiritual Art", "Hindu Art", "Sacred Visuals", "Mandala Art", "Philosophical Art", "Sanatana Dharma Gallery", "Divine Imagery", "Vedic Art", "Temple Art"],
 };
 
 // Updated placeholder data
